@@ -29,7 +29,6 @@ export default {
                 }
             }
             const ClientResult = new PointPosition(a.clientX, a.clientY)
-            console.log(ClientResult);
             const RenderCircle = () => {
                 this.points.unshift(ClientResult)
                 for(let i of this.points){
@@ -46,8 +45,10 @@ export default {
         ElementDelet(b) {
             b.stopPropagation()
             const RemoveElement = () => {
-                this.excluded.unshift(this.points[0])
-                this.points.splice(0, 1)
+                if (this.points.length != 0) {
+                    this.excluded.unshift(this.points[0])
+                    this.points.splice(0, 1)
+                }
             }
             RemoveElement()
         },
@@ -55,16 +56,18 @@ export default {
         ReturnElement(c) {
             c.stopPropagation()
             const ElementVolver = () => {
-                this.points.unshift(this.excluded[0])
-                this.excluded.splice(0, 1)
-                for(let item of this.points){
-                const returncircle = {
-                    positionX: document.querySelector('.point').style.left = `${item.X}px`, 
-                    positionY: document.querySelector('.point').style.top = `${item.Y}px` 
-                 }
-                 console.log(this.points);
-                 return returncircle
+                if (this.excluded.length != 0) {
+                    this.points.unshift(this.excluded[0])
+                    this.excluded.splice(0, 1)
+                    for(let item of this.points){
+                        const returncircle = {
+                        positionX: document.querySelector('.point').style.left = `${item.X}px`, 
+                        positionY: document.querySelector('.point').style.top = `${item.Y}px` 
+                     }
+                    console.log(this.excluded);
+                    return returncircle
             }
+                }
             }
             ElementVolver()
         }
